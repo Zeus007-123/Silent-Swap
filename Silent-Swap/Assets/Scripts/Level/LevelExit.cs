@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelExit : MonoBehaviour
 {
@@ -7,16 +6,7 @@ public class LevelExit : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
-
-            if (nextScene < SceneManager.sceneCountInBuildSettings) 
-            {
-                SceneManager.LoadScene(nextScene);
-            }
-            else
-            {
-                SceneManager.LoadScene(0);
-            }
+            FindObjectOfType<LevelUI>().ShowLevelComplete();
         }
     }
 }

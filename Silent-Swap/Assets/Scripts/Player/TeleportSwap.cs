@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class TeleportSwap : MonoBehaviour
 {
@@ -18,10 +19,15 @@ public class TeleportSwap : MonoBehaviour
                 Vector3 playerPos = transform.position;
                 Vector3 enemyPos = nearestEnemy.transform.position;
 
+                // Fix Y position so player doesn't float
                 enemyPos.y = playerPos.y;
 
+                // Swap positions
                 transform.position = enemyPos;
                 nearestEnemy.transform.position = playerPos;
+
+                // Visual feedback
+                StartCoroutine(Flash());
 
                 lastSwapTime = Time.time;
             }
@@ -48,5 +54,20 @@ public class TeleportSwap : MonoBehaviour
         }
 
         return nearest;
+    }
+
+    // Small flash effect
+    IEnumerator Flash()
+    {
+        Renderer r = GetComponent<Renderer>();
+
+        if (r == null) yield break;
+
+        Color original = r.material.color;
+
+        r.material.color = Color.white;
+        yield return new WaitForSeconds(0.2f);
+
+        r.material.color = original;
     }
 }

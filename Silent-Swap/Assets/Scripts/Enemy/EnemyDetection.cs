@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; 
 
 public class EnemyDetection : MonoBehaviour
 {
@@ -8,7 +7,9 @@ public class EnemyDetection : MonoBehaviour
 
     public LayerMask obstacleMask;
 
-    Transform player;
+    private Transform player;
+
+    private bool detected = false; // prevents multiple triggers
 
     private void Start()
     {
@@ -20,6 +21,8 @@ public class EnemyDetection : MonoBehaviour
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
 
         Debug.DrawRay(transform.position, directionToPlayer * detectionRange, Color.yellow);
+
+        if (detected) return; // stop checking after detection
 
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -33,9 +36,14 @@ public class EnemyDetection : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToPlayer, distance, obstacleMask)) 
                 {
                     //Player detected
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    Invoke(nameof(TriggerGameOver), 0.2f);
                 }
             }
         }
+    }
+
+    private void TriggerGameOver()
+    {
+        FindObjectOfType<LevelUI>().ShowGameOver();
     }
 }
