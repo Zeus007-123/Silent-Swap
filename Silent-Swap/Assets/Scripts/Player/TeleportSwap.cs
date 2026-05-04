@@ -23,6 +23,7 @@ public class TeleportSwap : MonoBehaviour
                 enemyPos.y = playerPos.y;
 
                 // Swap positions
+                SoundManager.Instance.Play(Sounds.Swap);
                 transform.position = enemyPos;
                 nearestEnemy.transform.position = playerPos;
 

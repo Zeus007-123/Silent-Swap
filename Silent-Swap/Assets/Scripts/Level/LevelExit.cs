@@ -7,6 +7,7 @@ public class LevelExit : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             FindObjectOfType<LevelUI>().ShowLevelComplete();
+            SoundManager.Instance.Play(Sounds.Win);
         }
     }
 }

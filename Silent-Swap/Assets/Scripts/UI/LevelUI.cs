@@ -6,7 +6,7 @@ public class LevelUI : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject levelCompletePanel;
 
-    void Start()
+    private void Start()
     {
         gameOverPanel.SetActive(false);
         levelCompletePanel.SetActive(false);
@@ -15,24 +15,28 @@ public class LevelUI : MonoBehaviour
     public void ShowGameOver()
     {
         gameOverPanel.SetActive(true);
-        //Time.timeScale = 0f;
+        SoundManager.Instance.Play(Sounds.Detect);
+        Time.timeScale = 0f;
     }
 
     public void Restart()
     {
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
+        SoundManager.Instance.Play(Sounds.ButtonClick);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void MainMenu()
     {
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
+        SoundManager.Instance.Play(Sounds.ButtonClick);
         SceneManager.LoadScene("Main Menu");
     }
 
     public void NextLevel()
     {
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
+        SoundManager.Instance.Play(Sounds.ButtonClick);
         int next = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (next < SceneManager.sceneCountInBuildSettings)
@@ -42,6 +46,6 @@ public class LevelUI : MonoBehaviour
     public void ShowLevelComplete()
     {
         levelCompletePanel.SetActive(true);
-        //Time.timeScale = 0f;
+        Time.timeScale = 0f;
     }
 }
